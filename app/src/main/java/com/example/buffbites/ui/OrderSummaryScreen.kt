@@ -9,7 +9,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
-import androidx.compose.material3.Divider
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -27,6 +27,8 @@ import java.text.NumberFormat
 @Composable
 fun OrderSummaryScreen(
     orderUiState: OrderUiState,
+    onCancelButtonClicked: () -> Unit = {},
+    onSubmitOrderButtonClicked: (String, String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     // Format all prices into strings with dollar sign and 2 decimal places (e.g. $4.99)
@@ -47,7 +49,7 @@ fun OrderSummaryScreen(
         formattedTotal
     )
 
-    Column (
+    Column(
         modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(8.dp),
 
@@ -66,7 +68,7 @@ fun OrderSummaryScreen(
         Text(
             text = stringResource(R.string.delivery_time, orderUiState.selectedDeliveryTime)
         )
-        Divider(
+        HorizontalDivider(
             thickness = 1.dp,
             modifier = Modifier.padding(bottom = 8.dp)
         )
@@ -96,13 +98,13 @@ fun OrderSummaryScreen(
         ) {
             OutlinedButton(
                 modifier = Modifier.weight(1f),
-                onClick = { /* TODO */ }
+                onClick = { onCancelButtonClicked() }
             ) {
                 Text(stringResource(R.string.cancel))
             }
             Button(
                 modifier = Modifier.weight(1f),
-                onClick = { /* TODO */ }
+                onClick = { onSubmitOrderButtonClicked(orderSubject, orderSummary) }
             ) {
                 Text(stringResource(R.string.submit))
             }
@@ -123,6 +125,8 @@ fun OrderSummaryScreenPreview() {
                 orderTotalPrice = Datasource.restaurants[0].menuItems[0].price + Datasource.restaurants[0].menuItems[0].price * 0.08,
                 selectedDeliveryTime = "Sat Sep 24 7:00 PM"
             ),
+            onSubmitOrderButtonClicked = { subject: String, summary: String -> },
+            onCancelButtonClicked = {},
             modifier = Modifier
                 .fillMaxHeight()
                 .padding(16.dp)

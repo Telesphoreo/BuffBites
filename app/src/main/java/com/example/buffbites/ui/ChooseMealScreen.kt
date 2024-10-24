@@ -10,7 +10,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
-import androidx.compose.material3.Divider
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.RadioButton
@@ -35,6 +35,8 @@ import java.text.NumberFormat
 fun ChooseMenuScreen(
     options: List<MenuItem>,
     onSelectionChanged: (MenuItem) -> Unit,
+    onCancelButtonClicked: () -> Unit = {},
+    onNextButtonClicked: () -> Unit = {},
     modifier: Modifier = Modifier,
 ) {
     var selectedItemName by rememberSaveable { mutableStateOf("") }
@@ -60,8 +62,8 @@ fun ChooseMenuScreen(
         Spacer(modifier = Modifier.weight(1f))
         MenuScreenButtonGroup(
             selectedItemName = selectedItemName,
-            onCancelButtonClicked = { /* TODO */ },
-            onNextButtonClicked = { /* TODO */ },
+            onCancelButtonClicked = { onCancelButtonClicked() },
+            onNextButtonClicked = { onNextButtonClicked() },
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(16.dp)
@@ -99,7 +101,7 @@ fun MenuItemRow(
                 text = NumberFormat.getCurrencyInstance().format(item.price),
                 style = MaterialTheme.typography.bodyMedium
             )
-            Divider(
+            HorizontalDivider(
                 thickness = 1.dp,
                 modifier = Modifier.padding(bottom = 16.dp)
             )

@@ -8,7 +8,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.material3.Button
-import androidx.compose.material3.Divider
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.RadioButton
@@ -32,6 +32,8 @@ fun ChooseDeliveryTimeScreen(
     subtotal: Double,
     options: List<String>,
     onSelectionChanged: (String) -> Unit = {},
+    onCancelButtonClicked: () -> Unit = {},
+    onNextButtonClicked: () -> Unit = {},
     modifier: Modifier = Modifier
 ) {
     var selectedValue by rememberSaveable { mutableStateOf("") }
@@ -65,7 +67,7 @@ fun ChooseDeliveryTimeScreen(
                     Text(item)
                 }
             }
-            Divider(
+            HorizontalDivider(
                 thickness = 1.dp,
                 modifier = Modifier.padding(bottom = 16.dp)
             )
@@ -87,15 +89,15 @@ fun ChooseDeliveryTimeScreen(
         ) {
             OutlinedButton(
                 modifier = Modifier.weight(1f),
-                onClick = { /* TODO */ }
+                onClick = { onCancelButtonClicked() }
             ) {
                 Text(stringResource(R.string.cancel))
             }
             Button(
                 modifier = Modifier.weight(1f),
-                // the button is enabed when the user makes a selection
+                // the button is enabled when the user makes a selection
                 enabled = selectedValue.isNotEmpty(),
-                onClick = { /* TODO */ }
+                onClick = { onNextButtonClicked() }
             ) {
                 Text(stringResource(R.string.next))
             }
